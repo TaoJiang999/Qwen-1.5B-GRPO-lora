@@ -1,0 +1,10 @@
+vllm==0.10.2+cu129
+torch==2.8.0+cu129
+flash-attn==2.6.3+cu129torch2.8
+tranformers==4.56.2
+peft==0.18.1
+trl==0.29.1
+accelerate==1.13.0
+datasets==4.8.3
+dotenv==0.9.9
+wandb==0.25.1
