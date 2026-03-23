@@ -154,28 +154,28 @@ def build_lora_config() -> LoraConfig:
 
 def build_sft_config() -> SFTConfig:
     return SFTConfig(
-        # ── 输出 ──
+        # 输出
         output_dir=OUTPUT_DIR,
-        # ── 轮次 & batch ──
+        # 轮次 & batch
         num_train_epochs=NUM_TRAIN_EPOCHS,
         max_steps=500,
         per_device_train_batch_size=PER_DEVICE_TRAIN_BATCH_SIZE,
         per_device_eval_batch_size=PER_DEVICE_EVAL_BATCH_SIZE,
         gradient_accumulation_steps=GRADIENT_ACCUMULATION_STEPS,
-        # ── 优化器 ──
+        # 优化器
         learning_rate=LEARNING_RATE,
         lr_scheduler_type=LR_SCHEDULER_TYPE,
         warmup_ratio=WARMUP_RATIO,
         weight_decay=WEIGHT_DECAY,
         max_grad_norm=MAX_GRAD_NORM,
         optim="adamw_torch_fused",   # 使用 fused AdamW，更快
-        # ── 序列 ──
+        # 序列
         max_length=MAX_SEQ_LENGTH,
         packing=PACKING,
-        # ── 精度 ──
+        # 精度
         bf16=BF16,
         fp16=FP16,
-        # ── 评估 & 保存 ──
+        # 评估 & 保存
         eval_strategy=EVAL_STRATEGY,
         eval_steps=EVAL_STEPS,
         save_strategy=SAVE_STRATEGY,
@@ -184,17 +184,17 @@ def build_sft_config() -> SFTConfig:
         load_best_model_at_end=LOAD_BEST_MODEL_AT_END,
         metric_for_best_model="eval_loss",
         greater_is_better=False,
-        # ── 日志 ──
+        # 日志
         logging_steps=LOGGING_STEPS,
         logging_first_step=True,
         report_to=REPORT_TO,
-        # ── Hub ──
+        # Hub
         push_to_hub=PUSH_TO_HUB,
         hub_model_id=HUB_MODEL_ID,
-        # ── Dataloader ──
+        # Dataloader
         dataloader_num_workers=DATALOADER_NUM_WORKERS,
         dataloader_prefetch_factor=DATALOADER_PREFETCH_FACTOR,
-        # ── 其他 ──
+        # 其他
         remove_unused_columns=True,   # 保留所有数据列，防止 chat template 报错
         gradient_checkpointing=True,   # 节省显存
         gradient_checkpointing_kwargs={"use_reentrant": False},

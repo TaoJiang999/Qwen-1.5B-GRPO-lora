@@ -21,7 +21,7 @@ SPLIT = "test"
 TENSOR_PARALLEL_SIZE = 1  
 
 def main():
-    print(f"🚀 开始加载模型进行评测: {MODEL_PATH}")
+    print(f"开始加载模型进行评测: {MODEL_PATH}")
     
     
     tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, trust_remote_code=True)
@@ -31,7 +31,7 @@ def main():
     raw_prompts = dataset["prompt"]
     solutions = dataset["solution"]
     
-    print(f"📊 成功加载测试集，共 {len(dataset)} 条样本。")
+    print(f"成功加载测试集，共 {len(dataset)} 条样本。")
 
     formatted_prompts = []
     for p in raw_prompts:
@@ -52,10 +52,10 @@ def main():
     
     sampling_params = SamplingParams(temperature=0.0, max_tokens=8192)
     
-    print(f"⚡ 开始 vLLM 批量推理...")
+    print(f" 开始 vLLM 批量推理...")
     start_time = time.time()
     outputs = llm.generate(formatted_prompts, sampling_params)
-    print(f"✅ 推理完成，耗时: {time.time() - start_time:.2f} 秒")
+    print(f"推理完成，耗时: {time.time() - start_time:.2f} 秒")
 
 
     wrapped_completions = []
@@ -66,7 +66,7 @@ def main():
             {"role": "assistant", "content": generated_text}
         ])
 
-    print("⚖️ 开始计算 TRL 奖励分数...")
+    print("开始计算 TRL 奖励分数...")
     
     fmt_scores = think_format_reward( 
         completions=wrapped_completions
@@ -93,13 +93,13 @@ def main():
     mean_acc = sum(acc_scores) / len(acc_scores) * 100
 
     print("\n" + "=" * 50)
-    print("📈 最终定量评测报告 (基于 TRL 奖励函数)")
+    print("最终定量评测报告 (基于 TRL 奖励函数)")
     print(f"模型路径: {MODEL_PATH}")
     print(f"测试集大小: {len(dataset)}")
     print("-" * 50)
-    print(f"🔹 格式遵循度 (Format Score)     : {mean_fmt:.2f} 分")
-    print(f"🔹 纯答案准确性 (Accuracy Score) : {mean_acc:.2f} 分")
-    print(f"🔹 推理链准确性 (Reasoning Score): {mean_reason:.2f} 分")
+    print(f"格式遵循度 (Format Score)     : {mean_fmt:.2f} 分")
+    print(f"纯答案准确性 (Accuracy Score) : {mean_acc:.2f} 分")
+    print(f"推理链准确性 (Reasoning Score): {mean_reason:.2f} 分")
     print("=" * 50)
 
 if __name__ == "__main__":
